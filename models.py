@@ -17,7 +17,7 @@ class Task(db.Model):
     # Defines the 'title' column: string, maximum length of 140 characters
     title = db.Column(db.String(140))
     # Defines the 'date' column: datetime, default is the current time
-    date = db.Column(db.DateTime(), default=datetime.utcnow)
+    date = app.db.Column(app.db.DateTime(), default=datetime.utcnow)
     # Defines the 'completed' column: boolean, default is False
     completed = db.Column(db.Boolean(), default=False)
     # Defines the 'priority' column: integer, default is 2 (Normal)
@@ -36,6 +36,5 @@ class Task(db.Model):
             'id': self.id,
             'title': self.title,
             'date': self.date.isoformat(),
-            'completed': self.completed,
-            'priority': self.priority
+            'completed': self.completed
         }
