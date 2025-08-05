@@ -9,7 +9,10 @@ const TaskApp = {
             task: {
                 'title': ' '
             },
-            tasks: []
+            tasks: [],
+            url : '',
+            method : '',
+            data : '',
         }
     },
     async created(){
@@ -24,9 +27,9 @@ const TaskApp = {
                 'X-Requested-With': 'XMLHttpRequets'
             })
 
-            console.log('url : ' + url);
-            console.log('url : ' + method);
-            console.log('url : ' + data);
+            this.url = url
+            this.method = method
+            this.data = data
         
 
             // Realiza la petición fetch
