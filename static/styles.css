@@ -2,7 +2,6 @@
     text-decoration: line-through;
 }
 
-<style>
 body {
     font-family: 'Inter', sans-serif;
     background-color: #f9fafb;
@@ -56,4 +55,3 @@ button:hover {
     text-decoration: line-through;
     color: #9ca3af;
 }
-</style>
