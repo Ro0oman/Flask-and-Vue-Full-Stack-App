@@ -24,6 +24,11 @@ const TaskApp = {
                 'X-Requested-With': 'XMLHttpRequets'
             })
 
+            console.log('url : ' + url);
+            console.log('url : ' + method);
+            console.log('url : ' + data);
+        
+
             // Realiza la petición fetch
             const response = await fetch(url, {
                 method: method,
