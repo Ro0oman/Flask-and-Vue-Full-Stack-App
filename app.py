@@ -4,9 +4,12 @@ from flask import jsonify
 from flask import request
 from flask import redirect
 from flask import url_for
+from flask import abort
 from dotenv import load_dotenv
 from config import Config
-from flask_sqlalchemy import SQLAlchemy
+from extensions import db
+from models import Task
+from forms import TaskForm
 
 # Carga las variables de entorno desde el archivo .flaskenv
 load_dotenv('./.flaskenv')
@@ -15,22 +18,18 @@ app = Flask(__name__)
 # Carga la configuración desde la clase Config
 app.config.from_object(Config)
 
-db = SQLAlchemy(app)
-import models  
-
-
-
-from forms import TaskForm
+# Inicializa la base de datos con la aplicación
+db.init_app(app)
 
 # Define la ruta principal ("/")
 @app.route("/")
 def index():
-    tasks = models.Task.query.all()
+    tasks = Task.query.all()
 
     # Si la petición es una petición AJAX
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequets':
-        return jsonify(tasks)
-    
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return jsonify([task.to_dict() for task in tasks])
+
     # Si no es una petición AJAX, renderiza la plantilla index.html
     return render_template('index.html')
 
@@ -41,20 +40,22 @@ def create_task():
     form = TaskForm(data = user_input)
 
     if form.validate():
-        task = models.Task(title = form.title.data)
+        task = Task(title = form.title.data)
 
         db.session.add(task)
         db.session.commit()
         # Returns task in JSON format
         return jsonify(task.to_dict())
-    
+
     return redirect(url_for('index'))
 # Define route to delete a task
 # Define la ruta para borrar una tarea
 @app.route('/delete', methods=['POST'])
 def delete_task():
     task_id = request.get_json().get('id')
-    task = models.Task.query.filter_by(id=task_id).first()
+    task = Task.query.get(task_id)
+    if task is None:
+        abort(404, description="Task not found")
 
     db.session.delete(task)
     db.session.commit()
@@ -64,14 +65,11 @@ def delete_task():
 @app.route('/complete', methods=['POST'])
 def complete_task():
     task_id = request.get_json().get('id')
-    task = models.Task.query.filter_by(id=task_id).first()
+    task = Task.query.get(task_id)
+    if task is None:
+        abort(404, description="Task not found")
 
     task.completed = True
 
-    db.session.add(task)
     db.session.commit()
     return jsonify({'result': 'Record updated'})
-
-# Inicia la aplicación si se ejecuta el script directamente
-if __name__ == '__main__':
-    app.run()
