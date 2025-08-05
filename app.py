@@ -21,11 +21,6 @@ app.config.from_object(Config)
 # Inicializa la base de datos con la aplicación
 db.init_app(app)
 
-# Crea las tablas de la base de datos en el contexto de la aplicación
-# Esto es crucial para que funcione en Vercel
-with app.app_context():
-    db.create_all()
-
 # Define la ruta principal ("/")
 @app.route("/")
 def index():
@@ -78,7 +73,3 @@ def complete_task():
 
     db.session.commit()
     return jsonify({'result': 'Record updated'})
-
-# Inicia la aplicación si se ejecuta el script directamente
-if __name__ == '__main__':
-    app.run()
