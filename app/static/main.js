@@ -24,7 +24,7 @@ const TaskApp = {
         },
         async createTask(){
             await this.getTasks()
-            const response = await fetch(window.location + 'create', {
+            const response = await fetch(window.location.origin + '/create', {
                 method: 'post',
                 headers:{
                     'Content-Type':'application/json',
