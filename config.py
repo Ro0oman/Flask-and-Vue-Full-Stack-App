@@ -1,8 +1,4 @@
-from pathlib import Path
 import os
-
-BASE_DIR = Path(__file__).parent
-print(BASE_DIR)
 
 class Config:
     # Lee la URL de la base de datos de las variables de entorno.

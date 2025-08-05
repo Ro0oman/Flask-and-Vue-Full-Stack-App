@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from datetime import datetime
-import app
+from extensions import db
 
 # Defines a data class for tasks
 @dataclass
-class Task(app.db.Model):
+class Task(db.Model):
 
     id:int
     title:str
@@ -12,13 +12,13 @@ class Task(app.db.Model):
     completed: bool
 
     # Defines the 'id' column: integer, primary key
-    id = app.db.Column(app.db.Integer(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True)
     # Defines the 'title' column: string, maximum length of 140 characters
-    title = app.db.Column(app.db.String(140))
+    title = db.Column(db.String(140))
     # Defines the 'date' column: datetime, default is the current time
-    date = app.db.Column(app.db.DateTime(), default=datetime.now())
+    date = db.Column(db.DateTime(), default=datetime.utcnow)
     # Defines the 'completed' column: boolean, default is False
-    completed = app.db.Column(app.db.Boolean(), default=False)
+    completed = db.Column(db.Boolean(), default=False)
 
     # Initializes a new Task object
     def __init__(self, *args, **kwargs):
