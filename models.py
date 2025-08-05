@@ -16,7 +16,7 @@ class Task(app.db.Model):
     # Defines the 'title' column: string, maximum length of 140 characters
     title = app.db.Column(app.db.String(140))
     # Defines the 'date' column: datetime, default is the current time
-    date = app.db.Column(app.db.DateTime(), default=datetime.utcnow)
+    date = app.db.Column(app.db.DateTime(), default=datetime.now())
     # Defines the 'completed' column: boolean, default is False
     completed = app.db.Column(app.db.Boolean(), default=False)
 

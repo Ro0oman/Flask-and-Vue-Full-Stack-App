@@ -28,8 +28,8 @@ def index():
     tasks = models.Task.query.all()
 
     # Si la petición es una petición AJAX
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequets':
-        return jsonify(tasks)
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return jsonify([task.to_dict() for task in tasks])
     
     # Si no es una petición AJAX, renderiza la plantilla index.html
     return render_template('index.html')
