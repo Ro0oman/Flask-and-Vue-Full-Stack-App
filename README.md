@@ -26,7 +26,7 @@ Sigue estos pasos para configurar el entorno de desarrollo en tu máquina local.
 *   [Node.js y npm](https://nodejs.org/)
 *   [Git](https://git-scm.com/)
 
-### Pasos
+### Pasos 
 
 1.  **Clona el repositorio:**
     ```bash
