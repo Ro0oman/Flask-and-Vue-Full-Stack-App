@@ -7,7 +7,7 @@ const TaskApp = {
     data(){
         return{
             task: {
-                'title': ' '
+                'title': ''
             },
             tasks: [],
             url : '',

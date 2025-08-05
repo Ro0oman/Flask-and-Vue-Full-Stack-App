@@ -1,34 +1,78 @@
 {% extends 'base.html' %}
 
-{% block content%}
-    
-    <div id="app">
+{% block content %}
+<div id="app" style="max-width: 600px; margin: 3rem auto; padding: 1rem; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; color: #e8eaed; background: #202123; border-radius: 12px; box-shadow: 0 4px 12px rgb(0 0 0 / 0.7);">
 
-        
+  <form @submit.prevent="createTask" style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+    <input
+      id="task-title"
+      type="text"
+      v-model="task.title"
+      placeholder="Enter task title..."
+      autocomplete="off"
+      style="flex-grow: 1; padding: 0.75rem 1rem; font-size: 1rem; border: 1px solid #3c3f41; border-radius: 8px; outline-offset: 2px; background: #2a2a2e; color: #e8eaed; box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.5); transition: border-color 0.2s ease;"
+      @focus="event => event.currentTarget.style.borderColor = '#4a90e2'"
+      @blur="event => event.currentTarget.style.borderColor = '#3c3f41'"
+    />
+    <button
+      type="submit"
+      :disabled="!task.title.trim()"
+      style="padding: 0.75rem 1.5rem; font-weight: 600; font-size: 1rem; color: white; background-color: #4a90e2; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s ease, box-shadow 0.2s ease;"
+      @mouseover="event => {
+        if(!event.currentTarget.disabled) {
+          event.currentTarget.style.backgroundColor = '#357ABD';
+          event.currentTarget.style.boxShadow = '0 2px 8px rgb(53 122 189 / 0.6)';
+        }
+      }"
+      @mouseout="event => {
+        event.currentTarget.style.backgroundColor = '#4a90e2';
+        event.currentTarget.style.boxShadow = 'none';
+      }"
+    >
+      Create
+    </button>
+  </form>
 
-        <form @submit.prevent="createTask">
-            <div class="form-group row">
-                <div class="col-9">
-                    <label for="">Create new task</label>
-                    <input type="text" class="form-control" v-model="task.title">
-                </div>
-                <div class="col-auto mt-auto">
-                    <button class="btn btn-success" type="submit">Create</button>
-                </div>
-            </div>
-        </form>
-
-        <div class="mt-5">
-            <div class="card mb-3" v-for="task, index in tasks" :key="index">
-                <div class="card-body row justify-content-between px-4" @dblclick="completeTask(task)" :class="{'completed':task.completed}">
-
-                    {task.title}
-
-                    <button type="submit" class="btn-close" @click="deteleTask(task)"></button>
-                </div>
-            </div>
-        </div>
-
+  <div>
+    <div
+      v-for="(task, index) in tasks"
+      :key="index"
+      @dblclick="completeTask(task)"
+      
+      style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; margin-bottom: 1rem; background: #2a2a2e; border: 1px solid #3c3f41; border-radius: 8px; box-shadow: 0 1px 3px rgb(0 0 0 / 0.6); cursor: pointer; transition: box-shadow 0.15s ease, border-color 0.15s ease;"
+      @mouseover="event => {
+        event.currentTarget.style.boxShadow = '0 4px 12px rgb(0 0 0 / 0.9)';
+        event.currentTarget.style.borderColor = '#4a90e2';
+      }"
+      @mouseout="event => {
+        event.currentTarget.style.boxShadow = '0 1px 3px rgb(0 0 0 / 0.6)';
+        event.currentTarget.style.borderColor = '#3c3f41';
+      }"
+    >
+      <span style="font-size: 1rem; color: #e8eaed;" :class="{ completed: task.completed }">{ task.title }</span>
+      <button
+        @click="deteleTask(task)"
+        aria-label="Delete task"
+        style="background: transparent; border: none; font-size: 1.25rem; color: #aaa; cursor: pointer; transition: color 0.2s ease;"
+        @mouseover="event => event.currentTarget.style.color = '#e55353'"
+        @mouseout="event => event.currentTarget.style.color = '#aaa'"
+      >
+        &times;
+      </button>
     </div>
+  </div>
 
+  <style>
+    .completed {
+      text-decoration: line-through;
+      color: #888;
+      opacity: 0.7;
+      transition: color 0.3s ease;
+    }
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  </style>
+</div>
 {% endblock %}
