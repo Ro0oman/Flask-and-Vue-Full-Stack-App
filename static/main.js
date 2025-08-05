@@ -24,7 +24,7 @@ const TaskApp = {
         async sendRequest(url, method, data){
             const myHeaders = new Headers({
                 'Content-Type':'application/json',
-                'X-Requested-With': 'XMLHttpRequets'
+                'X-Requested-With': 'XMLHttpRequest'
             })
 
             this.url = url
