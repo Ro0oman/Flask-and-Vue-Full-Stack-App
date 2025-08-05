@@ -28,7 +28,7 @@ def index():
     tasks = models.Task.query.all()
 
     # Si la petición es una petición AJAX
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequets':
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return jsonify(tasks)
     
     # Si no es una petición AJAX, renderiza la plantilla index.html
@@ -72,6 +72,6 @@ def complete_task():
     db.session.commit()
     return jsonify({'result': 'Record updated'})
 
-# Inicia la aplicación si se ejecuta el script directamente
-if __name__ == '__main__':
-    app.run()
+# # Inicia la aplicación si se ejecuta el script directamente
+# if __name__ == '__main__':
+#     app.run()
