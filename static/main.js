@@ -27,9 +27,6 @@ const TaskApp = {
                 'X-Requested-With': 'XMLHttpRequest'
             })
 
-            this.url = url
-            this.method = method
-            this.data = data
         
 
             // Realiza la petición fetch
